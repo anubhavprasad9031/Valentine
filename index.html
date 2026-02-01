@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💖</title>
+
+<style>
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: linear-gradient(180deg, #ffb6c1, #ffe4ec);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Comic Sans MS', cursive;
+  overflow: hidden;
+}
+
+/* Floating piggies & hearts */
+.floating {
+  position: absolute;
+  font-size: 26px;
+  animation: floatUp 8s infinite linear;
+}
+
+@keyframes floatUp {
+  from { transform: translateY(110vh); }
+  to { transform: translateY(-15vh); }
+}
+
+.card {
+  background: #fff0f5;
+  padding: 28px;
+  border-radius: 30px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(255,105,180,0.45);
+  position: relative;
+  z-index: 10;
+}
+
+h1 {
+  color: #ff1493;
+  margin-bottom: 15px;
+}
+
+.couple-img {
+  width: 100%;
+  border-radius: 22px;
+  margin-bottom: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Pig stickers */
+.pig-sticker {
+  position: absolute;
+  font-size: 34px;
+}
+
+.pig-left {
+  top: -15px;
+  left: -10px;
+}
+
+.pig-right {
+  top: -15px;
+  right: -10px;
+}
+
+button {
+  padding: 12px 26px;
+  font-size: 18px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+#yes {
+  background: #ff69b4;
+  color: white;
+}
+
+#no {
+  background: #ffc0cb;
+  position: absolute;
+  transition: transform 0.35s ease-in-out;
+}
+
+.hidden {
+  display: none;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Floating piggies -->
+<span class="floating" style="left:10%">🐷</span>
+<span class="floating" style="left:30%">💖</span>
+<span class="floating" style="left:50%">🐷</span>
+<span class="floating" style="left:70%">💕</span>
+<span class="floating" style="left:90%">🐷</span>
+
+<!-- Audio -->
+<audio id="bgMusic" src="bg.mp3" loop></audio>
+<audio id="pigSound" src="pig.mp3"></audio>
+
+<div class="card" id="questionBox">
+  <span class="pig-sticker pig-left">🐷💖</span>
+  <span class="pig-sticker pig-right">🐷💞</span>
+
+  <img src="couple.png" class="couple-img" alt="Us 💕">
+
+  <h1>Jyotsna,<br>will you be my Valentine? 💗</h1>
+
+  <button id="yes">Yes 💕</button>
+  <button id="no">No 💔</button>
+</div>
+
+<div class="card hidden" id="yesBox">
+  <span class="pig-sticker pig-left">🐷💘</span>
+  <span class="pig-sticker pig-right">🐷💖</span>
+
+  <h1>💘💘💘</h1>
+
+  <p>
+    I didn’t really doubt your answer…<br>
+    I just wanted to see you smile when you clicked yes 💖
+  </p>
+
+  <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif" width="260">
+
+  <p>Happy Valentine’s, my favorite person 🥰</p>
+</div>
+
+<script>
+const bgMusic = document.getElementById("bgMusic");
+const pigSound = document.getElementById("pigSound");
+const yesBtn = document.getElementById("yes");
+const noBtn = document.getElementById("no");
+
+// volume settings
+bgMusic.volume = 0.4;
+pigSound.volume = 1.0;
+
+// start music on first click (browser-safe)
+document.body.addEventListener("click", () => {
+  bgMusic.play().catch(() => {});
+}, { once: true });
+
+// smooth escape for No button
+noBtn.addEventListener("mouseenter", () => {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 220 - 110;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+});
+
+// Yes button action
+yesBtn.addEventListener("click", () => {
+  pigSound.currentTime = 0;
+  pigSound.play();
+
+  document.getElementById("questionBox").classList.add("hidden");
+  document.getElementById("yesBox").classList.remove("hidden");
+});
+</script>
+
+</body>
+</html>
